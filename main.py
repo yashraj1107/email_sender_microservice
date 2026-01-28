@@ -1,12 +1,15 @@
 from fastapi import FastAPI,status,HTTPException,Depends
-from db import SessionLocal, engine
-import models,schemas,db
-from passlib.context import CryptContext
+from database import SessionLocal, engine
+import models,schemas,database
 from sqlalchemy.orm import Session
 from utils import get_password_hash,verify_password,create_access_token
+from dotenv import load_dotenv
+import os
 
 models.Base.metadata.create_all(bind=engine)
 
+
+load_dotenv()
 app=FastAPI()
 
 def get_db():
