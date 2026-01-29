@@ -8,7 +8,6 @@ import os
 
 models.Base.metadata.create_all(bind=engine)
 
-
 load_dotenv()
 app=FastAPI()
 
@@ -45,3 +44,12 @@ def login(user:schemas.UserLogin,db:Session=Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Incorrect Password")
     access=create_access_token(data={"sub": user_db.id})
     return{"access_token":access}
+
+@jwt_required
+@app.post("/campagin",status_code=status.HTTP_201_CREATED)
+def create_campagin(campagin:schemas.CampaignCreate,db:Session=Depends(get_db)):
+    new_campagin=models.Campaign(name=campagin.name,subject=campagin.subject,body=campagin.body)
+    db.add(new_campagin)
+    db.commit()
+    db.refresh(new_campagin)
+    return{"message":"Campaign Created Successfully"}

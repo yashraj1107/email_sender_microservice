@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+from datetime import datetime
 
 class UserCreate(BaseModel):
     email_id:EmailStr
@@ -8,3 +9,29 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email_id:EmailStr
     password:str
+
+class CampaignCreate(BaseModel):
+    name:str
+    subject:str
+    body:str
+
+class CampaignOut(BaseModel):
+    id:int
+    name:str
+    subject:str
+    body:str
+    status:str
+    created_at: datetime
+    updated_at: datetime
+    class Config:
+        from_attributes = True
+
+class ContactIn(BaseModel):
+    email_id:EmailStr
+
+class ContactOut(BaseModel):
+    id:int
+    email_id:EmailStr
+    created_at: datetime    
+    class Config:
+        from_attributes = True
