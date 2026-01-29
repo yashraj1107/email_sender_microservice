@@ -51,6 +51,7 @@ def create_campagin(campaign:schemas.CampaignCreate,db:Session=Depends(get_db),c
     new_campaign=models.Campaign(name=campaign.name,subject=campaign.subject,body=campaign.body,user_id=current_user.id,status="draft")
     db.add(new_campaign)
     db.commit()
+    a
     db.refresh(new_campaign)
     return{"message":"Campaign Created Successfully"}
 
