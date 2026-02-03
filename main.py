@@ -54,6 +54,7 @@ def create_campagin(campaign:schemas.CampaignCreate,db:Session=Depends(get_db),c
     db.refresh(new_campaign)
     return{"message":"Campaign Created Successfully"}
 
+
 @app.get("/campaign/{campaign_id}",status_code=status.HTTP_200_OK,response_model=schemas.CampaignOut)
 def get_campagin(campaign_id:int,db:Session=Depends(get_db),current_user:models.User=Depends(get_current_user)):
     campaign=db.query(models.Campaign).filter(models.Campaign.id == campaign_id,models.Campaign.user_id == current_user.id).first()
