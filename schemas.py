@@ -15,6 +15,7 @@ class CampaignCreate(BaseModel):
     subject:str
     body:str
 
+
 class CampaignOut(BaseModel):
     id:int
     name:str

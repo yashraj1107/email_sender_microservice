@@ -46,6 +46,7 @@ def login(user:schemas.UserLogin,db:Session=Depends(get_db)):
     access=create_access_token(data={"sub": user_db.id})
     return{"access_token":access}
 
+
 @app.post("/campaign",status_code=status.HTTP_201_CREATED)
 def create_campagin(campaign:schemas.CampaignCreate,db:Session=Depends(get_db),current_user: models.User = Depends(get_current_user)):
     new_campaign=models.Campaign(name=campaign.name,subject=campaign.subject,body=campaign.body,user_id=current_user.id,status="draft")
