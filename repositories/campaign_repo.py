@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from models.campagin import Campaign
 
-
 def create_campaign(
     db: Session,
     user_id: int,

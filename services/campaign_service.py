@@ -3,7 +3,6 @@ from fastapi import HTTPException, status
 from repositories import campaign_repo
 from models.campagin import Campaign
 
-
 def create_campaign(
     db: Session,
     user_id: int,
@@ -18,7 +17,6 @@ def create_campaign(
         subject=subject,
         body=body
     )
-
 
 def get_campaign(
     db: Session,
