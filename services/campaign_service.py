@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from repositories import campaign_repo
 from models.campagin import Campaign
+from core.enums import CampaignStatus
+
 
 def create_campaign(
     db: Session,
@@ -51,7 +53,7 @@ def schedule_campaign(
             detail=f"Campaign cannot be scheduled from status '{campaign.status}'"
         )
 
-    campaign.status = "scheduled"
+    campaign.status = CampaignStatus.scheduled
     db.commit()
     db.refresh(campaign)
 

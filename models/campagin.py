@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, BigInteger,text,TIMESTAMP,Boolean,ForeignKey
 from db.session import Base
+from sqlalchemy import Enum as SqlEnum
+from core.enums import CampaignStatus
 
 class Campaign(Base):
     __tablename__='campaigns'
@@ -8,7 +10,7 @@ class Campaign(Base):
     name=Column(String,nullable=False)
     subject=Column(String,nullable=False)   
     body=Column(String,nullable=False)
-    status = Column(String, nullable=False, server_default="draft")
+    status = Column(SqlEnum(CampaignStatus),nullable=False,default=CampaignStatus.draft)
     created_at=Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True),server_default=text('now()'),onupdate=text('now()'))
 
