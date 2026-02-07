@@ -1,26 +1,25 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 import models.user,schemas.user
+from schemas.user import UserCreate
 from db.session import get_db
 from core.oauth2 import get_current_user
 from utils.utils import get_password_hash,verify_password,create_access_token
+from services import user_service
+
 router = APIRouter(
     prefix="/user",
     tags=["users"],
     dependencies=[Depends(get_current_user)]
 )
 
-@router.post("/register",status_code=status.HTTP_201_CREATED)
-def register(user:schemas.user.UserCreate,db:Session=Depends(get_db)):
-    existing_user=db.query(models.user.User).filter_by(email=user.email_id).first()
-    if existing_user:
-        raise HTTPException(status_code=400,detail="User already exists")
-    hash_password=get_password_hash(user.password)
-    new_user=models.user.User(email_id=user.email_id,password=hash_password)
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return{"message":"user created"}
+@router.post("/register")
+def register(user: UserCreate, db: Session = Depends(get_db)):
+    return user_service.register_user(
+        db=db,
+        email=user.email_id,
+        password=user.password
+    )
 
 @router.post("/login",status_code=status.HTTP_200_OK)
 def login(user:schemas.user.UserLogin,db:Session=Depends(get_db)):
