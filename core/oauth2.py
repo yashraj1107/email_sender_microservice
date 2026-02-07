@@ -4,10 +4,9 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from main import get_db
 import models
-from utils import SECRET_KEY, ALGORITHM
+from utils.utils import SECRET_KEY, ALGORITHM
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
-
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
