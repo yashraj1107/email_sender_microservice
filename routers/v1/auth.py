@@ -29,6 +29,7 @@ def login(
         password=form_data.password
     )
 
+
 @router.post("/refresh")
 def refresh_token(refresh_token: str):
     return user_service.refresh_user_token(refresh_token)
