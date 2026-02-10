@@ -19,12 +19,3 @@ class CampaignOut(BaseModel):
     class Config:
         from_attributes = True
 
-class ContactIn(BaseModel):
-    email_id:EmailStr
-
-class ContactOut(BaseModel):
-    id:int
-    email_id:EmailStr
-    created_at: datetime    
-    class Config:
-        from_attributes = True
